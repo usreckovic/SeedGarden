@@ -2,7 +2,6 @@ import type { PlantModel } from "./plant.model"
 
 
 export interface PlantDetailsModel extends PlantModel {
-    other:{
     price: number
     currency: string
     category: string
@@ -11,5 +10,4 @@ export interface PlantDetailsModel extends PlantModel {
     isAvailable: boolean
     stockQuantity: number
     productionDate: string
-    }[]
 }

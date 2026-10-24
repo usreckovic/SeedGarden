@@ -5,12 +5,6 @@ export interface PlantModel {
     description: string
     imageUrl: string
     imageAlt: string
-    price: number
-    currency: string
-    category: string
-    climate: string
     season: string
-    isAvailable: boolean
-    stockQuantity: number
-    productionDate: string
+    category: string
 }

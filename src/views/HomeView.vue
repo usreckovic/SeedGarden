@@ -18,7 +18,7 @@ onMounted(async () => {
 <template>
   <div class="card mb-4" v-if="random">
     <div class="row g-0">
-      <h1 class="most-sold">Most Sold</h1>
+      <h1 class="details">Najprodavanija biljka</h1>
       <div class="col-md-4">
         <img :src="random.imageUrl" class="img-fluid rounded-start">
       </div>
@@ -29,7 +29,7 @@ onMounted(async () => {
           <h6 class="card-subtitle mb-2 text-body-secondary">{{ random.season }}</h6>
           <p class="card-text">{{ random.description }}</p>
           <RouterLink :to="`/details/${random.id}`" class="btn btn-primary">
-            Details
+            Detalji
           </RouterLink>
         </div>
       </div>
@@ -48,21 +48,10 @@ onMounted(async () => {
             Details
           </RouterLink>
           <RouterLink :to="`/details/${p.id}`" class="btn btn-success m1">
-            BUY NOW
+            Kupi odmah
           </RouterLink>
         </div>
       </div>
     </div>
   </div>
 </template>
-<style>
-.most-sold{
-  background-color: #509b54 !important;
-  color: white;
-  text-align: center;
-  padding: 3px;
-  margin: 0px;
-  border-radius: 5px;
-  font-size: 30px;
-}
-</style>
