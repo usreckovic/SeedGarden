@@ -1,12 +1,11 @@
 <script setup lang="ts">
-
 </script>
 
 <template>
   <nav class="navbar navbar-expand-lg bg-body-tertiary mb-3 navbar-background">
     <div class="container">
       <RouterLink class="navbar-brand nav-color" to="/">
-        <i class="fa-solid fa-leaf" style="font-size: 25px;"></i> SeedGarden
+        <i class="fa-solid fa-leaf nav-color" style="font-size: 25px; "></i> SeedGarden
       </RouterLink>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,7 +26,8 @@
         </ul>
         <form class="d-flex" role="search">
           <input class="form-control me-2 search-bg" type="search" placeholder="Pretraga" aria-label="Search" />
-          <button class="btn btn-outline-success search-color" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+          <button class="btn btn-outline-success search-color" type="submit"><i
+              class="fa-solid fa-magnifying-glass"></i></button>
         </form>
       </div>
     </div>
@@ -40,34 +40,41 @@
 .navbar-background {
   background-color: #509b54 !important;
 }
-.search-color{
+
+.search-color {
   border-color: #2b532d;
   border-width: 2px;
   color: white;
 }
-.search-color:hover{
+
+.search-color:hover {
   background-color: #2b532d;
   border-color: #509b54;
 }
-.nav-color{
+
+.nav-color {
   color: white;
 }
-.nav-color:hover{
+
+.nav-color:hover {
   color: #2b532d;
 }
-.nav-color.active{
-  
+
+.nav-color:focus {
+  color: white;
+}
+
+.nav-color.active {
   color: #2b532d !important;
 }
+
 .details {
-   background-color: #509b54 !important;
-   color: white;
-   text-align: center;
-   padding: 3px;
-   margin: 0px;
-   border-radius: 5px;
-   font-size: 30px;
+  background-color: #509b54 !important;
+  color: white;
+  text-align: center;
+  padding: 3px;
+  margin: 0px;
+  border-radius: 5px;
+  font-size: 30px;
 }
-
-
 </style>

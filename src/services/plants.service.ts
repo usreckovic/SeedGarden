@@ -32,8 +32,14 @@ export class PlantService {
                 description: obj.description,
                 imageUrl: obj.image_url,
                 imageAlt: obj.image_alt,
+                price: obj.price,
+                currency: obj.currency,
+                category: obj.category,
+                climate: obj.climate,
                 season: obj.season,
-                category: obj.category
+                isAvailable: obj.is_available,
+                stockQuantity: obj.stock_quantity,
+                productionDate: obj.production_date
             })
         }
 
