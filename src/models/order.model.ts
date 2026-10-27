@@ -1,9 +1,12 @@
+export type OrderStatus = 'rezervisano' | 'pristiglo' | 'otkazano'
+
 export interface OrderModel{
     seedId: number
     seedCount: number
-    plantPrice: number
-    seedNumber?: string
+    pricePerSeed: number
     createdAt: string
-    paidAt: string | null
-    deletedAt: string | null
+    status: OrderStatus
+    seedNumber?: string
+    rating?: number
+    review?: string
 }

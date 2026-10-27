@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, watch } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import { UserService } from './services/user.service'
 const searchInput = ref<string>('')
 const router = useRouter()
+const route = useRoute()
+const user = ref(UserService.getActiveUser())
 
 function search() {
   const q = searchInput.value;
@@ -18,6 +21,16 @@ function search() {
       search: q
     }
   });
+}
+
+watch(() => route.fullPath, () => {
+  user.value = UserService.getActiveUser()
+})
+
+function logout() {
+  UserService.logout()
+  user.value = null
+  router.push('/login')
 }
 </script>
 
@@ -35,15 +48,28 @@ function search() {
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <RouterLink class="nav-link nav-color" active-class="active" to="/">
-              <i class="fa-solid fa-house"></i> Home
+              <i class="fa-solid fa-house"></i> Pocetna
             </RouterLink>
           </li>
-          <li class="nav-item">
-            <RouterLink class="nav-link nav-color" active-class="active" aria-current="page" to="/about">
-              <i class="fa-solid fa-circle-info"></i> About
+          <li class="nav-item" v-if="!user">
+            <RouterLink class="nav-link nav-color" active-class="active" aria-current="page" to="/login">
+              <i class="fa-solid fa-right-to-bracket"></i> Prijavi se
+            </RouterLink>
+          </li>
+          <li class="nav-item" v-if="!user">
+            <RouterLink class="nav-link nav-color" active-class="active" aria-current="page" to="/register">
+              <i class="fa-solid fa-user-plus"></i> Registraijca
+            </RouterLink>
+          </li>
+          <li class="nav-item" v-if="user">
+            <RouterLink class="nav-link nav-color" active-class="active" aria-current="page" to="/user">
+              <i class="fa-solid fa-circle-user"></i> Profil
             </RouterLink>
           </li>
         </ul>
+        <a class="nav-link nav-color me-3" active-class="active" aria-current="page" v-if="user" @click.prevent="logout()">
+          <i class="fa-solid fa-person-walking-arrow-right"></i> Odjava
+        </a>
         <form class="d-flex" role="search" @submit.prevent="search">
           <input class="form-control me-2 search-bg" v-model="searchInput" type="search" placeholder="Pretraga"
             aria-label="Search" />

@@ -2,14 +2,13 @@
 
 This template should help get you started developing with Vue 3 in Vite.
 
-## Description
-
-This project was made for course "Programming and Design of User Interfaces" as part of Singidunum Computer science 3rd year course.
-
-
 ## Recommended IDE Setup
 
 [VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+
+## Description
+
+This project was made for course "Programming and Design of User Interfaces" as part of Singidunum Computer science 3rd year course.
 
 ## Recommended Browser Setup
 

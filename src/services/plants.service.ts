@@ -50,6 +50,37 @@ export class PlantService {
         return plants
     }
 
+    static async getPlantByIds(ids: number[]): Promise<PlantModel[]> {
+        const rsp = await client.post('by-ids', {ids: ids})
+
+        const plants: PlantModel[] = []
+
+        for (let obj of rsp.data) {
+                plants.push({
+                    id: obj.id,
+                    name: obj.name,
+                    latinName: obj.latin_name,
+                    description: obj.description,
+                    imageUrl: obj.image_url,
+                    imageAlt: obj.image_alt,
+                    price: obj.price,
+                    currency: obj.currency,
+                    category: obj.category,
+                    climate: obj.climate,
+                    season: obj.season,
+                    isAvailable: obj.is_available,
+                    stockQuantity: obj.stock_quantity,
+                    productionDate: obj.production_date,
+                    plant_type: obj.plant_type,
+                    target_audience: obj.target_audience,
+                    planting_instructions: obj.planting_instructions,
+                    light_requirement: obj.light_requirement,
+                    intended_use: obj.intended_use
+                })
+        }
+        return plants
+    }
+
     static async getPlantById(id: number) {
         const details = await client.get(`/${id}`);
 

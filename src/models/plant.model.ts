@@ -18,4 +18,5 @@ export interface PlantModel {
     planting_instructions: string
     light_requirement: string
     intended_use: string
+    seedNumber?: string
 }

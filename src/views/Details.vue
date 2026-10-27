@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
-import { ref, onMounted, watchEffect } from 'vue'
+import { ref, watchEffect } from 'vue'
 import { PlantService } from '@/services/plants.service'
 import type { PlantModel } from '@/models/plant.model'
+import { UserService } from '@/services/user.service';
 
 const route = useRoute()
 const id = Number(route.params.id as string);
-const category = route.params.category as string;
 const plant = ref<PlantModel>()
 const other = ref<PlantModel[]>([])
+const reviews = UserService.getReviewsForPlant(Number(route.params.id))
+const average = UserService.getAverageRating(Number(route.params.id))
+const averageText = average.toFixed(1) + ' / 5 (' + reviews.length + ')'
 
 watchEffect(async () => {
    const currentId = Number(route.params.id as string);
@@ -21,6 +24,10 @@ watchEffect(async () => {
       other.value = await PlantService.getPlantsByCategory(plant.value.category);
    }
 })
+
+function isStarFilled(n: number) {
+   return n <= Math.round(average)
+}
 </script>
 
 <template>
@@ -75,26 +82,53 @@ watchEffect(async () => {
       </div>
    </div>
 
-   <div class="card mt-3" v-if="plant">
-      <div class="card-header d-flex justify-content-between align-items-start"
-         style="font-size: 30px; background-color: #509b54; color: white ;">
-         <div>
-            <h5 style="background-color: #509b54; border-radius: 5px; color: white; margin: 0px;">
-               <i class="fa-solid fa-circle-info"></i> Jos Informacija:
-            </h5>
+   <div class="row mt-3" v-if="plant">
+      <div class="col-12 col-md-6 mb-3">
+         <div class="card h-100">
+            <div class="card-header" style="background-color: #509b54; color: white;">
+               <h5 style="margin: 0px;">
+                  <i class="fa-solid fa-circle-info"></i> Jos Informacija:
+               </h5>
+            </div>
+            <ul class="list-group list-group-flush" style="padding: 10px;">
+               <li class="list-group-item p-md-3"><i class="fa-brands fa-readme" style="color: #509b54;"></i>
+                  Deskripcija: {{ plant.description }}</li>
+               <li class="list-group-item p-md-3"><i class="fa-solid fa-seedling" style="color: #509b54;"></i>
+                  Koriscenje: {{ plant.planting_instructions }}</li>
+               <li class="list-group-item p-md-3"><i class="fa-solid fa-hand-holding-heart" style="color: #509b54;"></i>
+                  Drzati u: {{ plant.intended_use }}</li>
+               <li class="list-group-item p-md-3"><i class="fa-solid fa-person-rays" style="color: #509b54"></i>
+                  Preporucujemo za: {{ plant.target_audience }}</li>
+            </ul>
          </div>
       </div>
-      <div>
-         <ul class="list-group list-group-flush" style="padding: 10px;">
-            <li class="list-group-item p-md-3"><i class="fa-brands fa-readme" style="color: #509b54;"></i>
-               Deskripcija: {{ plant.description }}</li>
-            <li class="list-group-item p-md-3"><i class="fa-solid fa-seedling" style="color: #509b54;"></i>
-               Koriscenje: {{ plant.planting_instructions }}</li>
-            <li class="list-group-item p-md-3"><i class="fa-solid fa-hand-holding-heart" style="color: #509b54;"></i>
-               Drzati u: {{ plant.intended_use }}</li>
-            <li class="list-group-item p-md-3"><i class="fa-solid fa-person-rays" style="color: #509b54"></i>
-               Preporucujemo za: {{ plant.target_audience }}</li>
-         </ul>
+
+      <div class="col-12 col-md-6 mb-3">
+         <div class="card h-100">
+            <div class="card-header d-flex justify-content-between align-items-center"
+               style="background-color: #509b54; color: white;">
+               <h5 style="margin: 0px;"><i class="fa-solid fa-star"></i> Recenzije</h5>
+               <span v-if="reviews.length > 0">
+                  <i v-for="n in 5" :key="n" class="fa-star" :class="isStarFilled(n) ? 'fa-solid' : 'fa-regular'"></i>
+                  {{ averageText }}
+               </span>
+            </div>
+            <ul class="list-group list-group-flush">
+               <li class="list-group-item" v-for="(r, i) in reviews" :key="i">
+                  <div class="d-flex justify-content-between">
+                     <strong>{{ r.name }}</strong>
+                     <span>
+                        <i v-for="n in 5" :key="n" class="fa-star text-warning"
+                           :class="n <= r.rating ? 'fa-solid' : 'fa-regular'"></i>
+                     </span>
+                  </div>
+                  <div>{{ r.review }}</div>
+               </li>
+               <li class="list-group-item" v-if="reviews.length == 0">
+                  Jos nema recenzija za ovu biljku.
+               </li>
+            </ul>
+         </div>
       </div>
    </div>
 
