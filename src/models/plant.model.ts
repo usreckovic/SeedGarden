@@ -13,4 +13,9 @@ export interface PlantModel {
     isAvailable: boolean
     stockQuantity: number
     productionDate: string
+    plant_type: string
+    target_audience: string
+    planting_instructions: string
+    light_requirement: string
+    intended_use: string
 }

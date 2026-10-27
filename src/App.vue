@@ -1,4 +1,24 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+const searchInput = ref<string>('')
+const router = useRouter()
+
+function search() {
+  const q = searchInput.value;
+
+  if (q == '')
+    return;
+
+  searchInput.value = '';
+
+  router.push({
+    path: '/',
+    query: {
+      search: q
+    }
+  });
+}
 </script>
 
 <template>
@@ -14,18 +34,19 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <RouterLink class="nav-link nav-color" active-class="active" aria-current="page" to="/">
-              Home
+            <RouterLink class="nav-link nav-color" active-class="active" to="/">
+              <i class="fa-solid fa-house"></i> Home
             </RouterLink>
           </li>
           <li class="nav-item">
             <RouterLink class="nav-link nav-color" active-class="active" aria-current="page" to="/about">
-              About
+              <i class="fa-solid fa-circle-info"></i> About
             </RouterLink>
           </li>
         </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2 search-bg" type="search" placeholder="Pretraga" aria-label="Search" />
+        <form class="d-flex" role="search" @submit.prevent="search">
+          <input class="form-control me-2 search-bg" v-model="searchInput" type="search" placeholder="Pretraga"
+            aria-label="Search" />
           <button class="btn btn-outline-success search-color" type="submit"><i
               class="fa-solid fa-magnifying-glass"></i></button>
         </form>

@@ -56,21 +56,54 @@ watchEffect(async () => {
                      Trenutno
                      na
                      stanju: {{ plant.stockQuantity }}</li>
+                  <li class="list-group-item p-md-3">
+                     <i class="fa-solid fa-sun" style="color: #509b54; font-size: 20px;"></i>
+                     Godisnje doba: {{ plant.season }}
+                  </li>
                   <li class="list-group-item p-md-3"><i class="fa-solid fa-calendar-day"
-                        style="color: #509b54; font-size: 20px; padding-bottom: 16.4%;"></i>
+                        style="color: #509b54; font-size: 20px; padding-bottom: 5%;"></i>
                      Datum proizvodnje: {{ plant.productionDate }}</li>
-                  <li class="list-group-item">{{ plant.price }} {{ plant.currency }} <input class="btn btn-primary"
-                        type="submit" value="Kupi"></li>
+                  <li class="list-group-item">
+                     <RouterLink class="btn btn-primary" type="submit" value="Rezervisi" style="margin-top: 10px;"
+                        :to="`/order/${id}`">
+                        <i class="fa-solid fa-cart-shopping"></i> Rezervisi
+                     </RouterLink>
+                  </li>
                </ul>
             </div>
          </div>
       </div>
    </div>
 
+   <div class="card mt-3" v-if="plant">
+      <div class="card-header d-flex justify-content-between align-items-start"
+         style="font-size: 30px; background-color: #509b54; color: white ;">
+         <div>
+            <h5 style="background-color: #509b54; border-radius: 5px; color: white; margin: 0px;">
+               <i class="fa-solid fa-circle-info"></i> Jos Informacija:
+            </h5>
+         </div>
+      </div>
+      <div>
+         <ul class="list-group list-group-flush" style="padding: 10px;">
+            <li class="list-group-item p-md-3"><i class="fa-brands fa-readme" style="color: #509b54;"></i>
+               Deskripcija: {{ plant.description }}</li>
+            <li class="list-group-item p-md-3"><i class="fa-solid fa-seedling" style="color: #509b54;"></i>
+               Koriscenje: {{ plant.planting_instructions }}</li>
+            <li class="list-group-item p-md-3"><i class="fa-solid fa-hand-holding-heart" style="color: #509b54;"></i>
+               Drzati u: {{ plant.intended_use }}</li>
+            <li class="list-group-item p-md-3"><i class="fa-solid fa-person-rays" style="color: #509b54"></i>
+               Preporucujemo za: {{ plant.target_audience }}</li>
+         </ul>
+      </div>
+   </div>
+
    <div class="row">
       <div class="col-12 mb-3 mt-3">
          <h5 style="background-color: #509b54; padding: 10px; border-radius: 5px; color: white; margin: 0px;">
-            Biljke u istoj kategoriji:</h5>
+            <i class="fa-solid fa-bars-staggered" style="font-size: 20px;"></i> Biljke u istoj
+            kategoriji:
+         </h5>
       </div>
       <div class="col-12 col-md-2 mb-2" style="display:grid;height: 150px;" v-for="o in other" :key="o.id">
          <div class="card text-center">
